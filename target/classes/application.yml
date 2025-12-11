@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: delivery-window-service
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      connect-timeout: 1000ms
+
+# External service configuration
+external-services:
+  venue-service:
+    base-url: ${VENUE_SERVICE_URL:http://localhost:8081/venue-service}
+    timeout: 5000ms
+  courier-service:
+    base-url: ${COURIER_SERVICE_URL:http://localhost:8081/courier-service}
+    timeout: 5000ms
+
+# Cache configuration
+cache:
+  ttl-seconds: ${CACHE_TTL_SECONDS:300}
+
+# Circuit breaker configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      venue-service:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+      courier-service:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+  timelimiter:
+    instances:
+      venue-service:
+        timeout-duration: 5s
+      courier-service:
+        timeout-duration: 5s
+
+# Logging configuration
+logging:
+  level:
+    com.example.deliveryservice: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
