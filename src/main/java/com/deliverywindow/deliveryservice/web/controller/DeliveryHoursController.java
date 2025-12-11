@@ -1,6 +1,7 @@
 package com.deliverywindow.deliveryservice.web.controller;
 
 import com.deliverywindow.deliveryservice.web.domain.DailySchedule;
+import com.deliverywindow.deliveryservice.web.domain.Window;
 import com.deliverywindow.deliveryservice.web.service.DeliveryIntersection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,7 +60,7 @@ public class DeliveryHoursController {
     public ResponseEntity<?> getCourierTime(
             @RequestParam String city,
             @RequestParam String venueId){
-        DailySchedule body = deliveryIntersection.deliveryInterSection(venueId, city);
-        return ResponseEntity.ok(body);
+        Map<String, List<String>> stringListMap = deliveryIntersection.deliveryInterSection(venueId, city);
+        return ResponseEntity.ok(stringListMap);
     }
 }

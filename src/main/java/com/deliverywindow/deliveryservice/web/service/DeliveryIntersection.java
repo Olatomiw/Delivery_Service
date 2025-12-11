@@ -5,15 +5,14 @@ import com.deliverywindow.deliveryservice.web.domain.StructuredResponse;
 import com.deliverywindow.deliveryservice.web.domain.Window;
 import com.sun.jdi.InternalException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import jdk.jshell.spi.ExecutionControl;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.time.LocalTime;
+
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,7 +26,7 @@ public class DeliveryIntersection implements ServiceClass {
     }
 
     @Override
-    public DailySchedule deliveryInterSection(String venueId, String citySlug) {
+    public Map<String, List<String>> deliveryInterSection(String venueId, String citySlug) {
         CompletableFuture<Map<String, Object>>getVenue= CompletableFuture.supplyAsync(
                 ()-> getVenue(venueId)
         );
@@ -46,16 +45,16 @@ public class DeliveryIntersection implements ServiceClass {
         HashMap<String, List<Window>> venueMap = (HashMap<String, List<Window>>) splitData(dailySchedule.getVenueMap());
         Map<String, List<Window>> courierMap = splitData(dailySchedule.getCourierMap());
 
-        Map<String, List<Window>>finalSchedule = new HashMap<>();
+        Map<String, List<String>>finalSchedule = new HashMap<>();
         for(String day: venueMap.keySet()){
             List<Window> venueWindows = venueMap.get(day);
             List<Window> courierWindows = courierMap.getOrDefault(day, List.of());
 
-            List<Window> windows = intersectWindows(venueWindows, courierWindows);
+            List<String> windows = intersectWindows(venueWindows, courierWindows);
             finalSchedule.put(day, windows);
         }
         System.out.println(finalSchedule);
-        return dailySchedule;
+        return finalSchedule;
     }
 
     @CircuitBreaker(name = "venue-service")
@@ -109,8 +108,9 @@ public class DeliveryIntersection implements ServiceClass {
         return parsed;
     }
 
-    private List<Window> intersectWindows(List<Window>venue, List<Window>courier){
-        List<Window>result = new ArrayList<>();
+    private List<String> intersectWindows(List<Window>venue, List<Window>courier){
+        List<String>finalTime = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         for(Window v : venue){
             for(Window c: courier){
                 LocalTime start = v.getStart().isAfter(c.getStart()) ? v.getStart() : c.getStart();
@@ -118,12 +118,15 @@ public class DeliveryIntersection implements ServiceClass {
 
                 if(start.isBefore(end)){
                     if(Duration.between(start,end).toMinutes()>=30){
-                        result.add(new Window(start,end));
+                        finalTime.add(start.format(formatter)+"-"+ end.format(formatter));
                     }
                 }
             }
         }
-        System.out.println("intersection"+ result);
-        return result;
+        if (finalTime.isEmpty()){
+            finalTime.add("Closed");
+        }
+        System.out.println("intersection"+ finalTime);
+        return finalTime;
     }
 }

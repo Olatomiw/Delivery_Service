@@ -1,6 +1,9 @@
 package com.deliverywindow.deliveryservice.web.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ServiceClass {
 
-    Object deliveryInterSection(String venueId, String citySlug);
+    Map<String, List<String>> deliveryInterSection(String venueId, String citySlug);
 }

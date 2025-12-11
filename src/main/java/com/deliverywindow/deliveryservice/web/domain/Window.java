@@ -1,5 +1,7 @@
 package com.deliverywindow.deliveryservice.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalTime;
 
 public class Window {
