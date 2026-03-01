@@ -1,42 +1,33 @@
 package com.deliverywindow.deliveryservice.web.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalTime;
 
 public class Window {
-    LocalTime start;
-    LocalTime end;
+    int start;
+    int end;
 
-    public Window(LocalTime start, LocalTime end){
+    public Window(int start, int end) {
         this.start = start;
         this.end = end;
     }
 
-    public Window() {
-    }
-
-    public LocalTime getStart() {
+    public int getStart() {
         return start;
     }
 
-    public void setStart(LocalTime start) {
+    public void setStart(int start) {
         this.start = start;
     }
 
-    public LocalTime getEnd() {
+    public int getEnd() {
         return end;
     }
 
-    public void setEnd(LocalTime end) {
+    public void setEnd(int end) {
         this.end = end;
     }
 
     @Override
     public String toString() {
-        return "Window{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
+        return super.toString();
     }
 }

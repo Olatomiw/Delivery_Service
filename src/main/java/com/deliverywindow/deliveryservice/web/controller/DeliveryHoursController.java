@@ -2,6 +2,7 @@ package com.deliverywindow.deliveryservice.web.controller;
 
 import com.deliverywindow.deliveryservice.web.domain.DailySchedule;
 import com.deliverywindow.deliveryservice.web.domain.Window;
+import com.deliverywindow.deliveryservice.web.domain.WindowResponse;
 import com.deliverywindow.deliveryservice.web.service.DeliveryIntersection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,11 @@ import java.util.Map;
 public class DeliveryHoursController {
 
     private final DeliveryIntersection deliveryIntersection;
+    private final RestTemplate restTemplate;
 
-    public DeliveryHoursController(DeliveryIntersection deliveryIntersection) {
+    public DeliveryHoursController(DeliveryIntersection deliveryIntersection, RestTemplate restTemplate) {
         this.deliveryIntersection = deliveryIntersection;
+        this.restTemplate = restTemplate;
     }
 
     @GetMapping("/delivery-hours")
@@ -51,7 +54,6 @@ public class DeliveryHoursController {
 
 //      localhost:8080/?citySlug=berlin&venueId=123
         String uri = "http://localhost:8081/venue-service/venues/"+venueId+"/opening-hours";
-        RestTemplate restTemplate = new RestTemplate();
         Map forObject = restTemplate.getForObject(uri, Map.class);
         return ResponseEntity.ok(forObject);
     }
@@ -60,7 +62,8 @@ public class DeliveryHoursController {
     public ResponseEntity<?> getCourierTime(
             @RequestParam String city,
             @RequestParam String venueId){
-        Map<String, List<String>> stringListMap = deliveryIntersection.deliveryInterSection(venueId, city);
-        return ResponseEntity.ok(stringListMap);
+        Map<String, String> stringListMap = deliveryIntersection.deliveryInterSection(venueId, city);
+        return ResponseEntity.ok(stringListMap)
+                ;
     }
 }
