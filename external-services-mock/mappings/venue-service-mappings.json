@@ -1,0 +1,105 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/venue-service/venues/123/opening-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "openingHours": {
+            "Monday": "09:00-22:00",
+            "Tuesday": "09:00-22:00", 
+            "Wednesday": "09:00-22:00",
+            "Thursday": "09:00-22:00",
+            "Friday": "09:00-23:00",
+            "Saturday": "10:00-23:00",
+            "Sunday": "10:00-21:00"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/venue-service/venues/456/opening-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "openingHours": {
+            "Monday": "13:30-15:00, 16:00-01:00",
+            "Tuesday": "13:30-15:00, 16:00-01:00",
+            "Wednesday": "Closed",
+            "Thursday": "Closed",
+            "Friday": "17:00-02:00",
+            "Saturday": "17:00-02:00",
+            "Sunday": "12:00-22:00"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/venue-service/venues/789/opening-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "openingHours": {
+            "Monday": "13:00-15:00",
+            "Tuesday": "13:00-15:00",
+            "Wednesday": "13:00-15:00", 
+            "Thursday": "13:00-15:00",
+            "Friday": "13:00-15:00",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/venue-service/venues/999/opening-hours"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "error": "Venue not found",
+          "code": "VENUE_NOT_FOUND"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/venue-service/venues/500/opening-hours"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "error": "Internal server error",
+          "code": "INTERNAL_ERROR"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/berlin/delivery-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "deliveryHours": {
+            "Monday": "09:00-14:00, 17:00-00:30",
+            "Tuesday": "09:00-14:00, 17:00-00:30",
+            "Wednesday": "09:00-14:00, 17:00-00:30",
+            "Thursday": "09:00-14:00, 17:00-00:30",
+            "Friday": "09:00-14:00, 17:00-01:00",
+            "Saturday": "10:00-15:00, 18:00-01:00",
+            "Sunday": "11:00-21:00"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/london/delivery-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "deliveryHours": {
+            "Monday": "14:00-21:00",
+            "Tuesday": "14:00-21:00",
+            "Wednesday": "14:00-21:00",
+            "Thursday": "14:00-21:00",
+            "Friday": "14:00-21:00",
+            "Saturday": "12:00-22:00",
+            "Sunday": "12:00-20:00"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/paris/delivery-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "deliveryHours": {
+            "Monday": "09:00-13:00",
+            "Tuesday": "09:00-13:00",
+            "Wednesday": "09:00-13:00",
+            "Thursday": "09:00-13:00",
+            "Friday": "09:00-13:00",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/madrid/delivery-hours"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "deliveryHours": {
+            "Monday": "14:31-16:00",
+            "Tuesday": "14:31-16:00",
+            "Wednesday": "14:31-16:00",
+            "Thursday": "14:31-16:00",
+            "Friday": "14:31-16:00",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/unknown/delivery-hours"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "error": "City not found",
+          "code": "CITY_NOT_FOUND"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/courier-service/cities/error/delivery-hours"
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "error": "Internal server error",
+          "code": "INTERNAL_ERROR"
+        }
+      }
+    }
+  ]
+}
